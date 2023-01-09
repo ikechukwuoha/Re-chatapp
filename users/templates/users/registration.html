@@ -1,0 +1,101 @@
+
+{% extends 'base3.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+<!--<div class="se-pre-con"></div>-->
+<div class="theme-layout">
+	<div class="container-fluid pdng0">
+		<div class="row merged">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="land-featurearea">
+					<div class="land-meta">
+						<h1>Winku</h1>
+						<p>
+							Winku is free to use for as long as you want with two active projects.
+						</p>
+						<div class="friend-logo">
+							<span><img src="images/wink.png" alt=""></span>
+						</div>
+						<a href="#" title="" class="folow-me">Follow Us on</a>
+					</div>	
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="login-reg-bg">
+					<div class="log-reg-area sign">
+						<h2 class="log-title">Sign Up</h2>
+							<p>
+								Don’t use Winku Yet? <a href="{% url 'users:login' %}" title="">Take the tour</a> or <a href="#" title="">Join now</a>
+							</p>
+						<form method="Post" action="">
+                            {% csrf_token %}
+							<div class="form-group">	
+							  <input type="text" id="input" name="first_name" required="required"/>
+							  <label class="control-label" for="input">First name</label><i class="mtrl-select"></i>
+							</div>
+                            <div class="form-group">	
+                                <input type="text" id="input" name="other_name" required="required"/>
+                                <label class="control-label" for="input">Other name</label><i class="mtrl-select"></i>
+                              <div class="form-group">	
+                                <input type="text" id="input" name="last_name" required="required"/>
+                                <label class="control-label" for="input">Last name</label><i class="mtrl-select"></i>
+                              </div>
+                              <div class="form-group">	
+                                <input type="text" id="input" name="username" required="required"/>
+                                <label class="control-label" for="input">Username</label><i class="mtrl-select"></i>
+                              </div>
+                              <div class="form-group">	
+                                <input type="email" name="email" id="input" required="required"/>
+                                <label class="control-label" for="input">Email</label><i class="mtrl-select"></i>
+                              </div>
+                              <div class="form-group">	
+                                <input type="password" name="password1" id="input" required="required"/>
+                                <label class="control-label" for="input">Password</label><i class="mtrl-select"></i>
+                              </div>
+                              <div class="form-group">	
+                                <input type="password" name="password2" id="input" required="required"/>
+                                <label class="control-label" for="input">Password</label><i class="mtrl-select"></i>
+                              </div>
+							
+								<button type="submit">Sign Up</button>
+							</div>
+						</form>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+{% include 'footer.html' %}
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+    <!-- <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="first_name" placeholder="First Name"><hr>
+        <input type="text" name="other_name" placeholder="Other Name"><hr>
+        <input type="text" name="last_name" placeholder="Last Name"><hr>
+        <input type="text" name="username" placeholder="Userame"><hr>
+        <input type="email" name="email" placeholder="Email"><hr>
+        <input type="password" name="password1" placeholder="Password"><hr>
+        <input type="password" name="password2" placeholder="Password Confirmation"><hr>
+
+        <button type="submit">Sign Up</button>
+    </form> -->
+
+ 

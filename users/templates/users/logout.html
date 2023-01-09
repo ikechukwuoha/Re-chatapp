@@ -1,0 +1,48 @@
+{% extends 'base3.html' %}
+
+{% block content %}
+
+
+<section>
+    <div class="gap100 gray-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="logout-meta">
+                        <h2>logged out</h2>
+                        <span>Do you want to check Janice Griffith’s Profile?</span>
+                        <p>
+                            Please <a href="{% url 'users:login' %}" title="">Sign In</a> or <a href="{% url 'users:register' %}" title="">Sign Up</a> now to create your own profile and have access to all the Winku awesome features!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	
+</section>
+
+
+
+{% include 'footer.html' %}
+
+<!-- <style>
+    h1{
+        padding-top: 50px;
+        padding-left: 20px;
+    }
+
+    p{
+        padding-left: 30px;
+    }
+
+    a{
+        padding-left: 30px;
+    }
+</style>
+
+<h1>Sign Out Page</h1>
+
+<p>Hello, You have been successfully Signed Out</p>
+<a href="{% url 'users:login' %}">sign in</a>    <a href="{% url 'users:register' %}">sign up</a> -->
+
+{% endblock content %}
