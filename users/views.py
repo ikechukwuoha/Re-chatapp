@@ -32,10 +32,12 @@ def registrationPage(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            #user.is_active = False
-            login(request, user)
-            messages.success(request, f"Hello {user.get_full_name()}, Your Account has been successfully created...")
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            
+            #login(request, user)
+            #messages.success(request, f"Hello {user.get_full_name()}, Your Account has been successfully created...")
             activateEmail(request, user, form.cleaned_data.get('email'))
             return redirect('users:login')
         
