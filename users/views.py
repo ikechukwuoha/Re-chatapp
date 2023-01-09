@@ -2,7 +2,6 @@ from django.shortcuts import render
 from.forms import RegistrationForm
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-#from .tokens import account_activation_token
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
@@ -16,9 +15,12 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 
 
+from .tokens import account_activation_token
+
+
 User = get_user_model()
 
-@login_required(login_url='login')
+
 def activateEmail(request, user, to_email):
     messages.success(request, f"Dear {user}, Please Check Your email {to_email} and click on the link to Complete your registration")
 
