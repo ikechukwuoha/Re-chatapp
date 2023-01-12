@@ -22,7 +22,20 @@ User = get_user_model()
 
 
 def activateEmail(request, user, to_email):
-    messages.success(request, f"Dear {user}, Please Check Your email {to_email} and click on the link to Complete your registration")
+    mail_subject = 'Activate Your Account'
+    message = render_to_string('users/template_activate_account.html', {
+        'user': user.get_full_name(),
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    if email.send():
+        messages.success(request, f"Dear {user}, Please Check Your email {to_email} and click on the link to Complete your registration")
+        
+    else:
+        messages.error(request, f"There was a problem sending confirmation email to {to_email}. Please Check if your email is correct...")
 
 
 def registrationPage(request):
@@ -102,3 +115,9 @@ def profile_page(request, pk):
     
     context = {}
     return render(request, 'profile.html', context)
+
+
+
+
+def activate(request, uid64, token):
+    return redirect('core:index')

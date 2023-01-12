@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from users.models import Profile
-from .models import Post
+from .models import Posts
 from django.contrib.auth.decorators import login_required
 
 
@@ -18,9 +18,9 @@ def index(request):
     
     profiles = Profile.objects.exclude(user=request.user)
     
-    posts = Post.objects.all()
+    post = Posts.objects.all()
     
-    context = {'user_profile': user_profile, 'posts': posts, 'profiles': profiles}
+    context = {'user_profile': user_profile, 'posts': post, 'profiles': profiles}
     return render(request, 'core/index.html', context)
 
 
@@ -34,7 +34,7 @@ def upload(request):
         image = request.FILES.get('image_upload')
         caption = request.POST['caption']
         
-        new_post = Post.objects.create(user=user, image=image, caption=caption)
+        new_post = Posts.objects.create(user=user, image=image, caption=caption)
         new_post.save()
         
         return redirect('core:index')
