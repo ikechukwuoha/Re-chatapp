@@ -23,7 +23,7 @@ from .tokens import account_activation_token
 def activateEmail(request, user, to_email):
     mail_subject = 'Activate Your Account'
     message = render_to_string('users/template_activate_account.html', {
-        'user': user.get_full_name(),
+        'user': user,
         'domain': get_current_site(request).domain,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
@@ -119,4 +119,22 @@ def profile_page(request, pk):
 
 
 def activate(request, uid64, token):
-    return redirect('core:index')
+    User = get_user_model()
+    
+    try:
+        uid = force_str(urlsafe_base64_decode(uid64))
+        user = User.objects.get(pk=uid)
+    
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active()
+        user.save()
+    
+        messages.success(request, f"Your email has been Confirmed, Now You can logg in and catch fun...")
+        return redirect('users:login')
+    else:
+        messages.error(request, f"This Activation link is not valid")
+        
+        return redirect('users:register')
