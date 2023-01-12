@@ -129,7 +129,7 @@ def activate(request, uid64, token):
         user = None
     
     if user is not None and account_activation_token.check_token(user, token):
-        user.is_active()
+        user.is_active = True
         user.save()
     
         messages.success(request, f"Your email has been Confirmed, Now You can logg in and catch fun...")
