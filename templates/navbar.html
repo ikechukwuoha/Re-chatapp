@@ -213,7 +213,7 @@
 				</form>
 			</div>
 			<ul class="setting-area">
-				<li><a href="{% url 'users:logout' %}" title="Home" data-ripple=""><i class="">{{user.get_full_name}}</i></a></li>
+				<li><a href="{% url 'users:profile' user.profile.id %}" data-ripple="">{{user.get_full_name}}</a></li>
 				<li>
 					<a href="#" title="Notification" data-ripple="">
 						<i class="ti-bell"></i><span>20</span>

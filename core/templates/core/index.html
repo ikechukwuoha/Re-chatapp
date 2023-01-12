@@ -67,7 +67,7 @@
                     </figure>
                    
                     <div class="friend-name">
-                        <ins><a href="{% url 'users:profile' request.user.id %}" title="">{{post.user.get_full_name}}</a></ins>
+                        <ins><a href="{% url 'users:profile' user.pk %}" title="">{{post.user.get_full_name}}</a></ins>
                         <p>@ {{post.user.username}}</p>
                         <span>{{post.created_at}}</span>
                         

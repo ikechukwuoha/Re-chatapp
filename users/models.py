@@ -72,6 +72,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 #Profile models
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bio = models.TextField()
     location = models.CharField(max_length=300, blank=True)
     phone = models.CharField(max_length=20, blank=True)

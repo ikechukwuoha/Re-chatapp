@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Profile
 from django.template.loader import render_to_string
 from django.http import HttpResponse
+from core.models import Posts
 
 
 from .tokens import account_activation_token
@@ -108,15 +109,15 @@ def logOutPage(request):
 
 
 def profile(request, pk):
-    if request.user.is_authenticated:
-        profile = Profile.objects.get(user_id=pk)
+    # if request.user.is_authenticated:
+    profile = Posts.objects.get(user=pk)
         
-        context = {'profile': profile}
-        return render(request, 'users/profile.html', context)
+    context = {'profile': profile}
+    return render(request, 'users/profile.html', context)
     
-    else:
-        messages.error(request, f"You must be logged in to view this page...")
-        return redirect('users:register')
+    # else:
+    #     messages.error(request, f"You must be logged in to view this page...")
+    #     return redirect('users:register')
 
 
 def activate(request, uid64, token):
