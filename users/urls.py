@@ -13,5 +13,5 @@ urlpatterns = [
     path('activate/<uid64>/<token>', views.activate, name='activate'),
     
     # A url link that routes users to their profile page
-    path('profile/<str:pk>/', views.profile_page, name='profile'),
+    path('profile/<int:pk>', views.profile, name='profile'),
 ]

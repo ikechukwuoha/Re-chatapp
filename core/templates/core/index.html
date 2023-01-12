@@ -67,7 +67,7 @@
                     </figure>
                    
                     <div class="friend-name">
-                        <ins><a href="{url 'profile' profile.id}" title="">{{post.user.get_full_name}}</a></ins>
+                        <ins><a href="{% url 'users:profile' request.user.id %}" title="">{{post.user.get_full_name}}</a></ins>
                         <p>@ {{post.user.username}}</p>
                         <span>{{post.created_at}}</span>
                         
@@ -383,7 +383,7 @@
                             <span class="status f-online"></span>
                         </figure>
                         <div class="friendz-meta">
-                            <a href="time-line.html">{{profile.user.username}}</a>
+                            <a href="{% url 'users:profile' request.user.id %}">{{profile.user.username}}</a>
                             <i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="13647a7d677661607c7f77766153747e727a7f3d707c7e">[email&#160;protected]</a></i>
                         </div>
                     </li>

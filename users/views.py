@@ -107,15 +107,16 @@ def logOutPage(request):
 
 
 
-
-
-@login_required(login_url='login')
-def profile_page(request, pk):
+def profile(request, pk):
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user_id=pk)
+        
+        context = {'profile': profile}
+        return render(request, 'users/profile.html', context)
     
-    context = {}
-    return render(request, 'profile.html', context)
-
-
+    else:
+        messages.error(request, f"You must be logged in to view this page...")
+        return redirect('users:register')
 
 
 def activate(request, uid64, token):
