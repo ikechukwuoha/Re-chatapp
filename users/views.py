@@ -18,7 +18,6 @@ from django.http import HttpResponse
 from .tokens import account_activation_token
 
 
-User = get_user_model()
 
 
 def activateEmail(request, user, to_email):
@@ -42,7 +41,7 @@ def registrationPage(request):
     page = 'register'
     if request.user.is_authenticated:
         return redirect("core:index")
-    user = User
+    user = get_user_model()
     
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
