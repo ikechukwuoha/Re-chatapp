@@ -16,11 +16,16 @@ def index(request):
     user_object = request.user
     user_profile = Profile.objects.get(user = user_object)
     
-    profiles = Profile.objects.exclude(user=request.user)
+    profiles = Profile.objects.exclude(user=user_object)
     
     post = Posts.objects.all()
     
-    context = {'user_profile': user_profile, 'posts': post, 'profiles': profiles}
+    context = {
+        'user_profile': user_profile, 
+        'posts': post, 
+        'profiles': profiles,
+    }
+    
     return render(request, 'core/index.html', context)
 
 

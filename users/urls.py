@@ -14,4 +14,14 @@ urlpatterns = [
     
     # A url link that routes users to their profile page
     path('profile/<str:pk>', views.profile, name='profile'),
+    path('users_list/', views.users_list, name='users_list'),
+    
+    path('friends_list/', views.friend_list, name='friends_list'),
+    path('about', views.about_profile, name='about'),
+    
+    
+    # Friend request routing
+    #path('send_friend_request/<int:pk>', views.send_friend_request, name='sendfriendrequest'),
+    #path('accept_friend_request/<int:pk>', views.accept_friend_request, name='acceptfriendrequest')
+    
 ]

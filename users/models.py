@@ -78,7 +78,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=20, blank=True)
     workin_at = models.CharField(max_length=150, blank=True)
     profile_pic = models.ImageField(upload_to='profile_pics/', default='defaultpic.jpg', null=True, blank=True)
-    friends = models.ManyToManyField('self', blank=True, related_name='my_friends', symmetrical=False)
+    friends = models.ManyToManyField('Profile', blank=True)
     created = models.DateTimeField(auto_now=True)
     updated =  models.DateTimeField(auto_now=True)
     
@@ -95,3 +95,15 @@ def save_user_model(sender, instance, created, **kwargs):
         user_profile.save()
         user_profile.friends.add(instance.profile)
         user_profile.save()
+        
+        
+        
+# Models that handles friend request
+class Friend_request(models.Model):
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='to_user', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True, null=True)
+    
+    
+    def __str__(self):
+        return "from {}, to {}".format(self.from_user.get_full_name(), self.to_user.get_full_name())

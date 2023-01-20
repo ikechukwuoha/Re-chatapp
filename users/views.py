@@ -10,10 +10,11 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from .forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import Profile, Friend_request
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from core.models import Posts
+import random
 
 
 from .tokens import account_activation_token
@@ -119,9 +120,98 @@ def profile(request, pk):
     context = {
         'profile': profile,
         'user_profile': user_profile,
+        'page': page
     }
         
     return render(request, 'users/profile.html', context)
+
+
+
+
+def about_profile(request):
+    user_object = request.user
+    user_profile = Profile.objects.get(user=user_object)
+    
+    profile_info = Profile.objects.get(user=user_object)
+    
+    context = {
+        'user_profile': user_profile,
+        'profile_info': profile_info
+    }
+
+    return render(request, 'users/about.html', context)
+
+
+
+@login_required(login_url='login')
+def users_list(request):
+    users = Profile.objects.exclude(user=request.user)
+    sent_friend_request = Friend_request.objects.filter(from_user=request.user)
+    my_friends = request.user.profile.friends.all()
+    sent_to = []
+    friends = []
+    
+    for user in my_friends:
+        friend=user.friends.all()
+        for f in friends:
+            if f in friends:
+                friend=friend.exclude(user=f.user)
+        friends += friend
+    for i in my_friends:
+        if i in friends:
+            friends.remove(i)
+    
+    if request.user.profile in friends:
+        friends.remove(request.user.profile)
+    random_list = random.sample(list(users), min(len(list(users)), 10))
+    for r in random_list:
+        if r in friends:
+            random_list.remove(r)
+    friends += random_list
+    for i in my_friends:
+        if i in friends:
+            friends.remove(i)
+    for se in sent_friend_request:
+        sent_to.append(se.to_user)
+    
+    context = {
+        'users': friends,
+        'sent': sent_to
+    }
+    return render(request, 'users/users_list.html', context)
+
+
+
+
+@login_required(login_url='login')
+def friend_list(request):
+    p = request.user.profile
+    friends = p.friends.all()
+    
+    context = {'friends': friends}
+    return render(request, 'users/friends_list.html', context)
+
+
+# def send_friend_request(request, pk):
+#     from_user = request.user
+#     to_user = get_user_model().objects.get(id=pk)
+#     friend_request, created = Friend_request.objects.get_or_create(from_user=from_user, to_user=to_user)
+    
+#     if created:
+#         return HttpResponse(f'Friend request sent')
+#     else:
+#         return HttpResponse(f'Friend request already sent')
+    
+    
+# def accept_friend_request(request, pk):
+#     friend_request = Friend_request.objects.get(id=pk)
+#     if friend_request.to_user == request.user:
+#         friend_request.to_user.friends.add(friend_request.from_user)
+#         friend_request.from_user.friends.add(friend_request.to_user)
+#         friend_request.delete()
+#         return HttpResponse(f'Friend request Accepted')
+#     else:
+#         return HttpResponse(f'Request not accepted')
 
 
 
