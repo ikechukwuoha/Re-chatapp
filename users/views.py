@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from .forms import RegistrationForm
+from .forms import RegistrationForm, UpdateForm, SetPasswordForm, PasswordResetForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Friend_request
 from django.template.loader import render_to_string
@@ -128,11 +128,11 @@ def profile(request, pk):
 
 
 
-def about_profile(request):
+def about_profile(request, pk):
     user_object = request.user
     user_profile = Profile.objects.get(user=user_object)
     
-    profile_info = Profile.objects.get(user=user_object)
+    profile_info = Profile.objects.get(id=pk)
     
     context = {
         'user_profile': user_profile,
@@ -239,3 +239,34 @@ def activate(request, uid64, token):
         messages.error(request, f"This Activation link is not valid")
         
         return redirect('users:register')
+
+
+def password_change(request):
+    user = request.user
+    if request.method == 'POST':
+        form = SetPasswordForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Your Password has been changed Successfully...")
+            return redirect('users:login')
+        
+        else:
+            for error in list(form.errors.vaues()):
+                messages.error(request, error)
+                
+    else:
+        form = SetPasswordForm(user)        
+            
+    context = {'form': form}
+    return render(request, 'users/password_reset_confirm.html', context)
+
+
+def password_reset_request(request):
+    form = PasswordResetForm()
+    
+    context = {'form': form}
+    return render(request, 'users/password_reset.html', context)
+
+
+def passwordResetConfirm(request, uuid64, token):
+    return redirect('users:home')

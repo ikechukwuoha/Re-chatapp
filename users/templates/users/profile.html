@@ -45,9 +45,9 @@
                               {% endif %}
                             </li>
                             <li>
-                                <a class="active" href="time-line.html" title="" data-ripple="">time line</a>
-                                <!-- <a class="" href="timeline-photos.html" title="" data-ripple="">Photos</a>
-                                <a class="" href="timeline-videos.html" title="" data-ripple="">Videos</a>
+                                <a class="active" href="{url 'users:profile' user.profile.id}" title="" data-ripple="">time line</a>
+                                <a class="" href="{% url 'users:password_change' %}" title="" data-ripple="">Change Password</a>
+                                <!-- <a class="" href="timeline-videos.html" title="" data-ripple="">Videos</a>
                                 <a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
                                 <a class="" href="timeline-groups.html" title="" data-ripple="">Groups</a>
                                 <a class="" href="about.html" title="" data-ripple="">about</a>

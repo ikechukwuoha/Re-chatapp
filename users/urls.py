@@ -11,13 +11,17 @@ urlpatterns = [
     
     # A url that links to the activate functionality
     path('activate/<uid64>/<token>', views.activate, name='activate'),
+    path('password_change', views.password_change, name='password_change'),
+    path('password_reset', views.password_reset_request, name='password_reset'),
+    path('reset/<uuid64>/<token>', views.passwordResetConfirm, name='password_reset_confirm'),
+    
     
     # A url link that routes users to their profile page
     path('profile/<str:pk>', views.profile, name='profile'),
     path('users_list/', views.users_list, name='users_list'),
     
     path('friends_list/', views.friend_list, name='friends_list'),
-    path('about', views.about_profile, name='about'),
+    path('about/<str:pk>>', views.about_profile, name='about'),
     
     
     # Friend request routing
