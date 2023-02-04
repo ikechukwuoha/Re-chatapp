@@ -1,5 +1,5 @@
 asgiref==3.6.0
-Django==4.1.4
+Django==3.2.3
 django-utils-six==2.0
 Pillow==9.3.0
 six==1.16.0

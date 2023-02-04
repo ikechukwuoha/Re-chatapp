@@ -255,9 +255,15 @@ def password_change(request):
                 messages.error(request, error)
                 
     else:
-        form = SetPasswordForm(user)        
+        form = SetPasswordForm(user)    
+        
+    user_objects = request.user
+    profile_objects = Profile.objects.get(user=user_objects)    
             
-    context = {'form': form}
+    context = {
+        'form': form, 
+        'profile_objects': profile_objects
+    }
     return render(request, 'users/password_reset_confirm.html', context)
 
 

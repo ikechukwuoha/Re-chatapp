@@ -4,6 +4,21 @@ Hi {{user.username}},
 
 Please click on the link below to activate your account:
 
-http://{{ domain }}{% url 'users:activate' uid64=uid token=token %}
+<div class="mail-link">
+
+    <div>
+
+        http://{{ domain }}{% url 'users:activate' uid64=uid token=token %}
+
+    </div>
+
+</div>
+
+<p>
+You can contact admin @ 08169874588 if You didn't initiate this action...
+</p>
+
+
+
 
 {% endautoescape %}
